@@ -38,8 +38,33 @@ const MORSE_TABLE = {
 };
 
 function decode(expr) {
-    // write your solution here
+  let decodeWordsArr = [];
+  let finaleDecodeArr = [];
+  for (let i = 1; i <= expr.split("").length / 10; i++) {
+    let wordArray = expr.split("").slice(`${i - 1}0`, `${i}0`);
+    let morseWord = [];
+    for (let m = 0; m < wordArray.length; m += 2) {
+      if (wordArray[m] + wordArray[m + 1] === "10") {
+        morseWord.push(".");
+      } else if (wordArray[m] + wordArray[m + 1] === "11") {
+        morseWord.push("-");
+      }
+    }
+    decodeWordsArr.push(morseWord);
+  }
+  decodeWordsArr.forEach((elements) => {
+    let valueElement = elements.join("");
+    // console.log(MORSE_TABLE[valueElement]);
+    if (MORSE_TABLE.hasOwnProperty(valueElement) == false) {
+      finaleDecodeArr.push(" ");
+    } else {
+      finaleDecodeArr.push(MORSE_TABLE[valueElement]);
+    }
+  });
+
+  return finaleDecodeArr.join("");
 }
+
 
 module.exports = {
     decode
